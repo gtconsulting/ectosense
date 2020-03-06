@@ -9,6 +9,7 @@ signToken = user => {
     return jwt.sign({
         iss: "Ectosense",
         sub: user._id,
+        role: user.role,
         iat: new Date().getTime(),
         exp: new Date().setDate(new Date().getDate() + 7) // expiry after 7 days 
     }, JWT_SECRET);

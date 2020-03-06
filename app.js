@@ -21,6 +21,19 @@ app.use("/assistant", require("./routes/assistants"));
 app.use("/doctor", require("./routes/doctors"));
 app.use("/patient", require("./routes/patients"));
 
+const acl = require('express-acl');
+let configObject = {
+    filename: 'acl.json',
+    path: 'config'
+};
+
+let responseObject = {
+    status: 'Access Denied',
+    message: 'You are not authorized to access this resource'
+};
+
+acl.config(configObject, responseObject);
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));

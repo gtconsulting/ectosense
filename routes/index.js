@@ -1,13 +1,11 @@
 const express = require("express");
+// const acl = require('express-acl');
 
 const router = express.Router();
 
-const passport = require("passport");
+// const passport = require("passport");
 const userController = require("../controllers/users");
 const sendError = require("../services/sendError");
-
-  
-router.get("/", (req, res) => res.send("Welcome"));
 
 router.post("/register", async (req, res, next) => {
     try{
@@ -28,6 +26,10 @@ router.post("/login", async (req, res, next) => {
     }
 });
 
-router.get("/secret", passport.authenticate('jwt', { session: false }), (req, res) => res.send("Success"));
+// All the routes below this middleware will be protected with token
+// router.use(passport.authenticate('jwt', { session: false }));
+// router.use(acl.authorize);
+
+// router.get("/secret", (req, res) => res.send("Success"));
 
 module.exports = router;
