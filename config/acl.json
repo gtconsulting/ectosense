@@ -20,6 +20,16 @@
       ]
     },
     {
+      "group": "assistant",
+      "permissions": [
+        {
+          "resource": "assistant/*",
+          "methods": "*",
+          "action": "allow"
+        }
+      ]
+    },
+    {
       "group": "doctor",
       "permissions": [
         {

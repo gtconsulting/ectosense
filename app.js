@@ -16,7 +16,7 @@ mongoose.connect(db, { useNewUrlParser: true })
 app.use(express.urlencoded({ extended: false }));
 
 // Routes 
-app.use("/", require("./routes/index"));
+app.use("/", require("./routes/users")); 
 app.use("/assistant", require("./routes/assistants"));
 app.use("/doctor", require("./routes/doctors"));
 app.use("/patient", require("./routes/patients"));

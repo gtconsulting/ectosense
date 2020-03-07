@@ -26,10 +26,4 @@ router.post("/login", async (req, res, next) => {
     }
 });
 
-// All the routes below this middleware will be protected with token
-// router.use(passport.authenticate('jwt', { session: false }));
-// router.use(acl.authorize);
-
-// router.get("/secret", (req, res) => res.send("Success"));
-
 module.exports = router;
