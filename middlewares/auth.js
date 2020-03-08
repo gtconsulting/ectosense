@@ -10,7 +10,8 @@ module.exports = {
             role: user.role
         }
         res.locals = {
-            user : user._id 
+            user : user._id, 
+            clinic : user.clinic 
         };
         next();
     })(req, res, next)}

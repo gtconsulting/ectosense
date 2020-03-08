@@ -26,13 +26,13 @@ module.exports = {
         return appointment;
     },
 
-    getAppointments: async (patient, assistant = null, doctor = null) => {
+    getAppointments: async (patient, assistant = null, clinic = null) => {
         let queryObj = {
             patient: patient
         };
         // Use the same fun for both doctors & assistants
         assistant ? queryObj['createdBy'] = assistant : '';
-        doctor ? queryObj['doctor'] = doctor : '';
+        clinic ? queryObj['clinic'] = clinic : '';
         let appointments = await Appointment.find(queryObj)
         .populate("patient", "-password -records")
         .populate("doctor", "-password")
@@ -42,13 +42,13 @@ module.exports = {
         return appointments;
     },
 
-    getAppointment: async (appointment, assistant = null, doctor = null) => {
+    getAppointment: async (appointment, assistant = null, clinic = null) => {
         let queryObj = {
             _id: appointment
         };
         // Use the same fun for both doctors & assistants
         assistant ? queryObj['createdBy'] = assistant : '';
-        doctor ? queryObj['doctor'] = doctor : '';
+        clinic ? queryObj['clinic'] = clinic : '';
         let appointmentObj = await Appointment.findOne(queryObj)
         .populate("patient", "-password -records")
         .populate("doctor", "-password")

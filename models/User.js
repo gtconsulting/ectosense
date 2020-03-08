@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -35,7 +36,12 @@ const UserSchema = new mongoose.Schema({
                 type: String
             }
         }
-    ]
+    ],
+    clinic: {
+        type: Schema.Types.ObjectId,
+        ref: "clinic",
+        require: true
+    }
 }, { timestamps: true });
 
 const User = mongoose.model("user", UserSchema);

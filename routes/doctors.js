@@ -14,7 +14,7 @@ router.use(acl.authorize);
 
 router.get("/appointments/:user", async (req, res, next) => {
     try{
-        let appointments = await assistantController.getAppointments(req.params.user, null, res.locals.user);
+        let appointments = await assistantController.getAppointments(req.params.user, null, res.locals.clinic);
         res.send(appointments);
     }
     catch (error){
@@ -24,7 +24,7 @@ router.get("/appointments/:user", async (req, res, next) => {
 
 router.get("/appointment/:appointment", async (req, res, next) => {
     try{
-        let appointment = await assistantController.getAppointment(req.params.appointment, null, res.locals.user);
+        let appointment = await assistantController.getAppointment(req.params.appointment, null, res.locals.clinic);
         res.send(appointment);
     }
     catch (error){

@@ -15,8 +15,13 @@ module.exports = {
         // role is singular whereas it's plural for clinics model
         udpateObj[reqObj.role + "s"] = user._id;
         await Clinic.updateOne(
-            { _id: mongoose.Types.ObjectId(reqObj.clinic) },
+            { _id: reqObj.clinic },
             { $push: udpateObj }
+        );
+        
+        await User.updateOne(
+            { _id: user._id },
+            { clinic: reqObj.clinic }
         );
         
         return user;
