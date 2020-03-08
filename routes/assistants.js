@@ -6,11 +6,40 @@ const router = express.Router();
 const passport = require("passport");
 const sendError = require("../services/sendError");
 const { auth } = require("../middlewares/auth");
+const assistantController = require("../controllers/assistants");
 
 // All the routes below this middleware will be protected with token
 router.use((req, res, next) => auth(req, res, next));
 router.use(acl.authorize);
 
-router.get("/secret", (req, res) => res.send("Success"));
+router.post("/create/appointment", async (req, res, next) => {
+    try{
+        let appointment = await assistantController.createAppointment(req.body, res);
+        res.send(appointment);
+    }
+    catch (error){
+        sendError(error, req, res, next);
+    }
+});
+
+router.get("/appointments/:user", async (req, res, next) => {
+    try{
+        let appointments = await assistantController.getAppointments(req.params.user, res.locals.user);
+        res.send(appointments);
+    }
+    catch (error){
+        sendError(error, req, res, next);
+    }
+});
+
+router.get("/appointment/:appointment", async (req, res, next) => {
+    try{
+        let appointment = await assistantController.getAppointment(req.params.appointment, res.locals.user);
+        res.send(appointment);
+    }
+    catch (error){
+        sendError(error, req, res, next);
+    }
+});
 
 module.exports = router;

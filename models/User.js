@@ -19,7 +19,23 @@ const UserSchema = new mongoose.Schema({
         type: String,
         require: true,
         default: 'patient'
-    }
+    },
+    records: [
+        {
+            name: {
+                type: String
+            },
+            type: {
+                type: String
+            },
+            desc: {
+                type: String
+            },
+            url: {
+                type: String
+            }
+        }
+    ]
 }, { timestamps: true });
 
 const User = mongoose.model("user", UserSchema);
