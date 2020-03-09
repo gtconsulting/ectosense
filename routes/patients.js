@@ -17,7 +17,7 @@ dotenv.config();
 
 var cloudinary = require('cloudinary').v2;
 
-console.log("process heroku: ", process.env.CLOUDINARY_API_KEY, process.env.CLOUDINARY_API_SECRET, process.env.CLOUDINARY_NAME);
+
 cloudinary.config({ 
     cloud_name: process.env.CLOUDINARY_NAME, 
     api_key: process.env.CLOUDINARY_API_KEY, 
@@ -51,6 +51,7 @@ router.get("/appointment/:appointment", async (req, res, next) => {
 
 router.post("/record", upload.single('record'), 
     (req, res, next) => {
+        console.log("process heroku: ", process.env.CLOUDINARY_API_KEY, process.env.CLOUDINARY_API_SECRET, process.env.CLOUDINARY_NAME);
         cloudinary.uploader.upload(req.file.path, { resource_type: 'auto' },
             function(err, result) {
                 if(err){
