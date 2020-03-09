@@ -42,4 +42,16 @@ router.get("/appointment/:appointment", async (req, res, next) => {
     }
 });
 
+// Get all the appointments of the assistant
+router.get("/appointments", async (req, res, next) => {
+    try{
+        let appointments = await assistantController.getAppointments(null, res.locals.user, null, null);
+        res.send(appointments);
+    }
+    catch (error){
+        sendError(error, req, res, next);
+    }
+});
+
+
 module.exports = router;

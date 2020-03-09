@@ -26,17 +26,21 @@ module.exports = {
         return appointment;
     },
 
-    getAppointments: async (patient, assistant = null, clinic = null) => {
-        let queryObj = {
-            patient: patient
-        };
+    getAppointments: async (patient = null, assistant = null, clinic = null, doctor = null) => {
+        let queryObj = {};
         // Use the same fun for both doctors & assistants
+        patient ? queryObj['patient'] = patient : '';
         assistant ? queryObj['createdBy'] = assistant : '';
         clinic ? queryObj['clinic'] = clinic : '';
+        doctor ? queryObj['doctor'] = doctor : '';
+
+        // don't fetch patient records for assistants 
+        let patientPopulate = "-password " + (assistant ? "-records" : "");
         let appointments = await Appointment.find(queryObj)
-        .populate("patient", "-password -records")
+        .populate("patient", patientPopulate)
         .populate("doctor", "-password")
         .populate("clinic", "-doctors -assistants")
+        .populate("createdBy", "-password")
         .sort({ "createdAt": -1 }).exec();
         
         return appointments;
@@ -49,11 +53,15 @@ module.exports = {
         // Use the same fun for both doctors & assistants
         assistant ? queryObj['createdBy'] = assistant : '';
         clinic ? queryObj['clinic'] = clinic : '';
+
+        // don't fetch patient records for assistants 
+        let patientPopulate = "-password " + (assistant ? "-records" : "");
         let appointmentObj = await Appointment.findOne(queryObj)
-        .populate("patient", "-password -records")
+        .populate("patient", patientPopulate)
         .populate("doctor", "-password")
-        .populate("clinic", "-doctors -assistants");
-        
+        .populate("clinic", "-doctors -assistants")
+        .populate("createdBy", "-password")
+
         return appointmentObj;
     }
 }
