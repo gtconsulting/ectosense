@@ -22,6 +22,7 @@ Say what the step will be
 npm install 
 create a .env file 
 copy the contents of .env.exampls & replace with your coludinary details
+create an account on mongodb.com/local db, replace the details in config/database.js
 npm start
 ```
 
