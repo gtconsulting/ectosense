@@ -35,9 +35,9 @@ module.exports = {
         doctor ? queryObj['doctor'] = doctor : '';
 
         // don't fetch patient records for assistants 
-        let patientPopulate = "-password " + (assistant ? "-records" : "");
+        // let patientPopulate = "-password " + (assistant ? "-records" : "");
         let appointments = await Appointment.find(queryObj)
-        .populate("patient", patientPopulate)
+        .populate("patient", "-password -records")
         .populate("doctor", "-password")
         .populate("clinic", "-doctors -assistants")
         .populate("createdBy", "-password")
@@ -58,10 +58,16 @@ module.exports = {
         let patientPopulate = "-password " + (assistant ? "-records" : "");
         let appointmentObj = await Appointment.findOne(queryObj)
         .populate("patient", patientPopulate)
-        .populate("doctor", "-password")
+        .populate("doctor", "-password -records")
         .populate("clinic", "-doctors -assistants")
-        .populate("createdBy", "-password")
+        .populate("createdBy", "-password -records");
 
+        appointmentObj = JSON.parse(JSON.stringify(appointmentObj));
+        
+        if(!assistant){
+            appointmentObj.patient.records = appointmentObj.patient.records.filter(obj => appointmentObj.records.indexOf(obj._id.toString())  !== -1);
+        }
+        delete appointmentObj.records;
         return appointmentObj;
     }
-}
+} 

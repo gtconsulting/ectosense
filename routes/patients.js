@@ -70,5 +70,36 @@ router.post("/record", upload.single('record'),
     }
 });
 
+router.get("/records", async (req, res, next) => {
+    try{
+        let records = await patientController.getAllRecords(res.locals.user);
+        res.send(records);
+    }
+    catch (error){
+        sendError(error, req, res, next);
+    }
+});
+
+// Record will be shared with a specific appointment which is accessible to all the doctors of a clinic
+router.get("/records/grant-access/:record/:appointment", async (req, res, next) => {
+    try{
+        let update = await patientController.grantAccess(req.params.record, req.params.appointment);
+        res.send(update);
+    }
+    catch (error){
+        sendError(error, req, res, next);
+    }
+});
+
+router.get("/records/revoke-access/:record/:appointment", async (req, res, next) => {
+    try{
+        let update = await patientController.revokeAccess(req.params.record, req.params.appointment);
+        res.send(update);
+    }
+    catch (error){
+        sendError(error, req, res, next);
+    }
+});
+
 
 module.exports = router;
