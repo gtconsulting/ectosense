@@ -53,7 +53,6 @@ module.exports = {
         // Use the same fun for both doctors & assistants
         assistant ? queryObj['createdBy'] = assistant : '';
         clinic ? queryObj['clinic'] = clinic : '';
-
         // don't fetch patient records for assistants 
         let patientPopulate = "-password " + (assistant ? "-records" : "");
         let appointmentObj = await Appointment.findOne(queryObj)

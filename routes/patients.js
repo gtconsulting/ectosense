@@ -40,7 +40,7 @@ router.get("/appointments", async (req, res, next) => {
 
 router.get("/appointment/:appointment", async (req, res, next) => {
     try{
-        let appointment = await assistantController.getAppointment(res.locals.user);
+        let appointment = await assistantController.getAppointment(req.params.appointment);
         res.send(appointment);
     }
     catch (error){
