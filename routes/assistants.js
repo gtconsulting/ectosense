@@ -22,9 +22,9 @@ router.post("/create/appointment", async (req, res, next) => {
     }
 });
 
-router.get("/appointments/:user", async (req, res, next) => {
+router.get("/appointments/:patient", async (req, res, next) => {
     try{
-        let appointments = await assistantController.getAppointments(req.params.user, res.locals.user);
+        let appointments = await assistantController.getAppointments(req.params.patient, res.locals.user);
         res.send(appointments);
     }
     catch (error){
